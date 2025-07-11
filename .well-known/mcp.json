@@ -1,0 +1,106 @@
+{
+  "mcp_version": "0.1.0",
+  "display_name": "Memory Server MCP",
+  "description": "Save, recall, and manage key memories with tags, timestamps, content search, expiration, and linking.",
+  "author": "Hridya",
+  "capabilities": {
+    "tools": [
+      {
+        "name": "save_memory",
+        "description": "Saves a value to a key. If the key exists, it updates the memory. You can add/replace tags and set/remove expiration.",
+        "arguments": [
+          {"name": "key", "type": "string", "description": "The key to save/update the value under.", "required": true},
+          {"name": "value", "type": "string", "description": "The value to save.", "required": true},
+          {"name": "tags", "type": "array", "items": {"type": "string"}, "description": "Optional: A list of tags to associate with this memory. If provided, replaces existing tags. Pass an empty array to remove all tags.", "required": false},
+          {"name": "expires_in_seconds", "type": "number", "description": "Optional: The number of seconds until this memory expires. Pass 0 or a negative number to remove expiration.", "required": false}
+        ]
+      },
+      {
+        "name": "recall_memory",
+        "description": "Recalls a memory by its key, with optional related memories suggestions.",
+        "arguments": [
+          {"name": "key", "type": "string", "description": "The key of the memory to recall.", "required": true},
+          {"name": "include_related", "type": "boolean", "description": "Include related memory suggestions (default: true).", "required": false},
+          {"name": "max_related", "type": "number", "description": "Maximum number of related memories to suggest (default: 5).", "required": false}
+        ]
+      },
+      {
+        "name": "list_memories",
+        "description": "Lists all saved memory keys (excluding expired ones). Optionally, filter by a specific tag.",
+        "arguments": [
+          {"name": "tag", "type": "string", "description": "Optional: Filter memories by this tag.", "required": false}
+        ]
+      },
+      {
+        "name": "delete_memory",
+        "description": "Deletes a memory by its key.",
+        "arguments": [{"name": "key", "type": "string", "description": "The key of the memory to delete.", "required": true}]
+      },
+      {
+        "name": "list_all_tags",
+        "description": "Lists all unique tags currently in use across all memories (excluding expired ones).",
+        "arguments": []
+      },
+      {
+        "name": "search_memory_content",
+        "description": "Intelligent fuzzy search for memories. Searches content, keys, and tags with smart similarity matching.",
+        "arguments": [
+          {"name": "query", "type": "string", "description": "Text to search for in memory content, keys, and tags.", "required": true}
+        ]
+      },
+      {
+        "name": "link_memories",
+        "description": "Creates a directed link from a source memory to a target memory with a specified relationship type.",
+        "arguments": [
+          {"name": "source_key", "type": "string", "description": "The key of the memory from which the link originates.", "required": true},
+          {"name": "target_key", "type": "string", "description": "The key of the memory to which the link points.", "required": true},
+          {"name": "relationship_type", "type": "string", "description": "The type of relationship (e.g., 'related_to', 'depends_on', 'is_part_of').", "required": true}
+        ]
+      },
+      {
+        "name": "get_linked_memories",
+        "description": "Retrieves a list of memories linked from a given source memory, optionally filtered by relationship type.",
+        "arguments": [
+          {"name": "source_key", "type": "string", "description": "The key of the memory to get links from.", "required": true},
+          {"name": "relationship_type", "type": "string", "description": "Optional: Filter linked memories by this relationship type.", "required": false}
+        ]
+      },
+      {
+        "name": "find_related_memories",
+        "description": "Finds memories related to a given memory through content similarity, shared tags, and link relationships.",
+        "arguments": [
+          {"name": "memory_key", "type": "string", "description": "The key of the memory to find related memories for.", "required": true},
+          {"name": "include_content", "type": "boolean", "description": "Include content-based similarity (default: true).", "required": false},
+          {"name": "include_tags", "type": "boolean", "description": "Include tag-based similarity (default: true).", "required": false},
+          {"name": "include_links", "type": "boolean", "description": "Include link-based relationships (default: true).", "required": false},
+          {"name": "max_results", "type": "number", "description": "Maximum number of related memories to return (default: 10).", "required": false},
+          {"name": "min_similarity", "type": "number", "description": "Minimum similarity threshold (0.0-1.0, default: 0.3).", "required": false}
+        ]
+      },
+      {
+        "name": "find_memory_path",
+        "description": "Finds the shortest connection path between two memories through their relationships.",
+        "arguments": [
+          {"name": "from_key", "type": "string", "description": "The starting memory key.", "required": true},
+          {"name": "to_key", "type": "string", "description": "The target memory key.", "required": true}
+        ]
+      },
+      {
+        "name": "search_by_relationship",
+        "description": "Search for memories using relationship patterns. Use * as wildcards.",
+        "arguments": [
+          {"name": "pattern", "type": "string", "description": "Relationship pattern (format: 'source relationship target'). Examples: '* depends_on project1', 'task1 related_to *'", "required": true}
+        ]
+      },
+      {
+        "name": "find_memories_within_degrees",
+        "description": "Find all memories connected within a specified number of relationship degrees from a starting memory.",
+        "arguments": [
+          {"name": "start_key", "type": "string", "description": "The starting memory key.", "required": true},
+          {"name": "max_degrees", "type": "number", "description": "Maximum degrees of separation to search (default: 2).", "required": false},
+          {"name": "relationship_type", "type": "string", "description": "Optional: Filter by specific relationship type.", "required": false}
+        ]
+      }
+    ]
+  }
+}

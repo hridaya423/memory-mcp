@@ -1,0 +1,42 @@
+{
+  "name": "memory-server-mcp",
+  "version": "1.0.2",
+  "description": "A Model Context Protocol (MCP) server for persistent memory storage with tagging, search, and linking capabilities",
+  "main": "server.js",
+  "bin": {
+    "memory-server-mcp": "server.js"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mcp",
+    "memory",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "storage",
+    "tagging"
+  ],
+  "author": "Hridya Agrawal",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hridaya423/memory-mcp.git"
+  },
+  "homepage": "https://github.com/hridaya423/memory-mcp#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "server.js",
+    ".well-known/"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.15.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "fuse.js": "^7.1.0"
+  }
+}
